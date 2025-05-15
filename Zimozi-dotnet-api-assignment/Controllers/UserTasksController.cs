@@ -85,12 +85,9 @@ namespace Zimozi_dotnet_api_assignment.Controllers
         public ActionResult CreateTask([FromBody] AddTaskDto taskDto)
         {
             // Fetch user to be assigned the new task
-            User assignedUser;
-            try
-            {
-                assignedUser = dbContext.Users.Single(u => u.Username == taskDto.UserName);
-            }
-            catch (InvalidOperationException e)
+            User? assignedUser = dbContext.Users.FirstOrDefault(u => u.Username == taskDto.UserName);
+
+            if (assignedUser == null)
             {
                 return BadRequest($"User {taskDto.UserName} to be assigned not found");
             }
