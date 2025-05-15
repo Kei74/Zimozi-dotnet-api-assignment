@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Zimozi_dotnet_api_assignment.data;
+using Zimozi_dotnet_api_assignment.Identity;
 using Zimozi_dotnet_api_assignment.Models.DTO;
 using Zimozi_dotnet_api_assignment.Models.Entities;
 
@@ -13,17 +15,18 @@ namespace Zimozi_dotnet_api_assignment.Controllers
     [Route("api/tasks")]
     public class UserTasksController : Controller
     {
-        private readonly ApplicationDbContext dbContext;
+        private readonly ApplicationDbContext _dbContext;
         public UserTasksController(ApplicationDbContext dbContext)
         {
-            this.dbContext = dbContext;
+            this._dbContext = dbContext;
         }
         // GET: /api/tasks/
+        [Authorize]
         [HttpGet]
         public ActionResult GetAllTasks()
         {
             // Fetch all tasks from database
-            List<UserTask> allTasks = dbContext.UserTasks.ToList();
+            List<UserTask> allTasks = _dbContext.UserTasks.ToList();
 
             // Map domain objects to DTO objects
             List<TaskDto> tasks = new List<TaskDto>();
@@ -43,12 +46,13 @@ namespace Zimozi_dotnet_api_assignment.Controllers
         }
 
         // GET: /api/tasks/{id}
+        [Authorize]
         [HttpGet]
         [Route("{id:Guid}")]
         public ActionResult GetTaskById([FromRoute] Guid id)
         {
             // Fetch task from database
-            UserTask? task = dbContext.UserTasks.Find(id);
+            UserTask? task = _dbContext.UserTasks.Find(id);
 
             // Return error 404 if not found
             if (task == null)
@@ -81,11 +85,13 @@ namespace Zimozi_dotnet_api_assignment.Controllers
             return Ok(taskDto);
         }
 
+        // POST: /api/tasks/
+        [Authorize(Policy = IdentityData.AdminRolePolicyName)]
         [HttpPost]
         public ActionResult CreateTask([FromBody] AddTaskDto taskDto)
         {
             // Fetch user to be assigned the new task
-            User? assignedUser = dbContext.Users.FirstOrDefault(u => u.Username == taskDto.UserName);
+            User? assignedUser = _dbContext.Users.FirstOrDefault(u => u.Username == taskDto.UserName);
 
             if (assignedUser == null)
             {
@@ -102,8 +108,8 @@ namespace Zimozi_dotnet_api_assignment.Controllers
             };
 
             // Save object to database
-            dbContext.UserTasks.Add(task);
-            dbContext.SaveChanges();
+            _dbContext.UserTasks.Add(task);
+            _dbContext.SaveChanges();
 
             // Return Dto and id of created object
             return CreatedAtAction(nameof(GetTaskById), new { id = task.Id }, taskDto);

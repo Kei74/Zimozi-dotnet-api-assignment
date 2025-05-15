@@ -6,7 +6,7 @@ namespace Zimozi_dotnet_api_assignment.Models
     public static class SeedMethods
     {
         // Hard coded seed data for the sake of clarity
-        // To be moved to more secure secret storage for prod
+        // To be moved to more secure storage for prod
         private static readonly (string username, string password)[] AdminUserSeedList = new[]
         {
             ("Admin", "Adminpass"), ("Admin2", "Admin2pass"), ("Admin3", "Admin3pass")
