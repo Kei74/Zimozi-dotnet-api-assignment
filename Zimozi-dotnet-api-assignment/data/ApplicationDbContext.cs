@@ -11,11 +11,11 @@ namespace Zimozi_dotnet_api_assignment.data
 
         public DbSet<User> Users { get; set; }
         public DbSet<UserTask> UserTasks { get; set; }
-        public DbSet<TaskComment> TaskComments{ get; set; }
+        public DbSet<TaskComment> TaskComments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
 
             // Store UserRole property as string in database
             modelBuilder.Entity<User>()
@@ -24,17 +24,27 @@ namespace Zimozi_dotnet_api_assignment.data
                 r => r.ToString(),
                 r => (UserRole)Enum.Parse(typeof(UserRole), r));
 
-            // Define One-To-Many relationship between User and UserTasks
+            // Define One-To-Many relationship between;
+            // User and UserTasks
             modelBuilder.Entity<User>()
-                .HasMany<UserTask>(u => u.Tasks)
-                .WithOne(t => t.User)
+                .HasMany<UserTask>(u => u.AssignedTasks)
+                .WithOne(t => t.AssignedUser)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Define One-To-Many relationship between UserTasks and TaskComments
+            // Users and TaskComments, not navigable from Users, preserve comments and set null on delete
+            modelBuilder.Entity<User>()
+                .HasMany<TaskComment>()
+                .WithOne(tc => tc.User)
+                .HasForeignKey(tc => tc.UserId);
+
+
+            // UserTasks and TaskComments
             modelBuilder.Entity<UserTask>()
                 .HasMany<TaskComment>(t => t.TaskComments)
                 .WithOne(tc => tc.UserTask)
+                .HasForeignKey(t => t.TaskId)
                 .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }

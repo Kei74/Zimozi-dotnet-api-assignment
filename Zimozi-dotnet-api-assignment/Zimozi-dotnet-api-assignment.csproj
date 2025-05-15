@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>Zimozi_dotnet_api_assignment</RootNamespace>
+    <UserSecretsId>8770823b-fc6c-467d-8478-998711f57e41</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

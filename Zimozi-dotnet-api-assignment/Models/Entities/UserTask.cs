@@ -6,8 +6,15 @@
         public required string Name { get; set; }
         public required string Description { get; set; }
 
-        public required User User { get; set; }
+        /// <summary>
+        /// Assigned User
+        /// </summary>
+        public required User AssignedUser { get; set; }
+        public required string AssignedUserName { get; set; }
 
-        public ICollection<TaskComment>? TaskComments { get; set; }
+        /// <summary>
+        /// Navigable Comments on Task
+        /// </summary>
+        public ICollection<TaskComment> TaskComments { get; set; } = new List<TaskComment>();
     }
 }
