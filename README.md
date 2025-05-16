@@ -12,3 +12,25 @@
 3. run `docker build -t zimozi-dotnet-api -f Zimozi-dotnet-api-assignment/Dockerfile .` from terminal to build the image
 4. run `docker run -p 8080:8080 --env-file .env zimozi-dotnet-api`
 5. Navigate to http://localhost:8080/swagger/index.html for swagger UI
+
+# Usage
+
+
+
+## Endpoints
+All /api/tasks methods require authentication
+Bearer token is obtained from the **/api/login** method
+To execute requests in SwaggerUI, the bearer token returned is to be pasted after clikcing the `Authorize` button at the top right of the webpage.
+
+### POST /api/login
+Verifies username against users in database, and on successful verification returns a bearer token for accessing the other endpoints.
+
+
+### GET /api/tasks
+Fetches list of all tasks
+### GET /api/tasks/{Id}
+Fetches a task by provided Id
+### Post /api/tasks
+**Requires authorization as an Admin user**
+Creates a new task, requires valid username.
+
