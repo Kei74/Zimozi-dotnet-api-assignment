@@ -37,7 +37,7 @@ namespace Zimozi_dotnet_api_assignment.Controllers
                     Id = task.Id,
                     Name = task.Name,
                     Description = task.Description,
-                    AssignedUserName = task.AssignedUserName,
+                    AssignedUsername = task.AssignedUser.Username,
                 };
                 tasks.Add(taskDto);
             }
@@ -66,7 +66,7 @@ namespace Zimozi_dotnet_api_assignment.Controllers
                 Id = task.Id,
                 Name = task.Name,
                 Description = task.Description,
-                AssignedUserName = task.AssignedUserName,
+                AssignedUsername = task.AssignedUser.Username,
                 Comments = new List<TaskCommentDto>(),
             };
 
@@ -91,11 +91,11 @@ namespace Zimozi_dotnet_api_assignment.Controllers
         public ActionResult CreateTask([FromBody] AddTaskDto taskDto)
         {
             // Fetch user to be assigned the new task
-            User? assignedUser = _dbContext.Users.FirstOrDefault(u => u.Username == taskDto.UserName);
+            User? assignedUser = _dbContext.Users.FirstOrDefault(u => u.Username == taskDto.Username);
 
             if (assignedUser == null)
             {
-                return BadRequest($"User {taskDto.UserName} to be assigned not found");
+                return BadRequest($"User {taskDto.Username} to be assigned not found");
             }
 
             // Create task object
@@ -104,15 +104,24 @@ namespace Zimozi_dotnet_api_assignment.Controllers
                 Name = taskDto.Name,
                 Description = taskDto.Description,
                 AssignedUser = assignedUser,
-                AssignedUserName = assignedUser.Username,
+                AssignedUserId = assignedUser.Id,
             };
 
             // Save object to database
             _dbContext.UserTasks.Add(task);
             _dbContext.SaveChanges();
 
+            // Create return object
+            TaskDto createdTaskDto = new TaskDto()
+            {
+                Id = task.Id,
+                Name = taskDto.Name,
+                Description = taskDto.Description,
+                AssignedUsername = task.AssignedUser.Username,
+            };
+
             // Return Dto and id of created object
-            return CreatedAtAction(nameof(GetTaskById), new { id = task.Id }, taskDto);
+            return CreatedAtAction(nameof(GetTaskById), new { id = task.Id }, createdTaskDto);
         }
 
     }

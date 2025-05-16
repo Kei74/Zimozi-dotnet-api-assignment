@@ -7,6 +7,7 @@ namespace Zimozi_dotnet_api_assignment.Models.Entities
     {
         public Guid Id { get; set; }
         public required string Username { get; set; }
+        public required string Password { get; set; }
 
         /// <summary>
         /// User Role: Admin/User

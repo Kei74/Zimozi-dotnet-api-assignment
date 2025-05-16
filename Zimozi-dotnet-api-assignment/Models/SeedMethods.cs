@@ -64,6 +64,7 @@ namespace Zimozi_dotnet_api_assignment.Models
                 User user = new User
                 {
                     Username = userSeedData.username,
+                    Password = userSeedData.password,
                     Role = role,
                 };
                 context.Set<User>().Add(user);
@@ -85,7 +86,7 @@ namespace Zimozi_dotnet_api_assignment.Models
                     Name = seedTaskData.name,
                     Description = seedTaskData.description,
                     AssignedUser = user,
-                    AssignedUserName = seedTaskData.assignedUserName,
+                    AssignedUserId = seedTaskData.assignedUserName,
                 };
                 context.Set<UserTask>().Add(task);
             }

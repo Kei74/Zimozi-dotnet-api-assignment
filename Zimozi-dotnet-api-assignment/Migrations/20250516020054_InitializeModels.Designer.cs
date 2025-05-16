@@ -12,8 +12,8 @@ using Zimozi_dotnet_api_assignment.data;
 namespace Zimozi_dotnet_api_assignment.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250515015936_InitModels")]
-    partial class InitModels
+    [Migration("20250516020054_InitializeModels")]
+    partial class InitializeModels
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,6 +55,10 @@ namespace Zimozi_dotnet_api_assignment.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Role")
                         .IsRequired()

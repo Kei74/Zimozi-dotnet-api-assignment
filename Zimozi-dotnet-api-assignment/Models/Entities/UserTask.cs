@@ -10,7 +10,7 @@
         /// Assigned User
         /// </summary>
         public required User AssignedUser { get; set; }
-        public required string AssignedUserName { get; set; }
+        public required Guid AssignedUserId { get; set; }
 
         /// <summary>
         /// Navigable Comments on Task

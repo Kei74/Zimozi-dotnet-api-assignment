@@ -7,7 +7,11 @@ namespace Zimozi_dotnet_api_assignment.Models.DTO
         public required Guid Id { get; set; }
         public required string Name { get; set; }
         public required string Description { get; set; }
-        public required string AssignedUserName { get; set; }
+
+        /// <summary>
+        /// Using Username in DTO instead of Id for simpler API call demonstrations
+        /// </summary>
+        public required string AssignedUsername { get; set; }
         public ICollection<TaskCommentDto>? Comments { get; set; }
 
         /*

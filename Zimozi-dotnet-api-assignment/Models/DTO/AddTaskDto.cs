@@ -2,7 +2,10 @@
 {
     public class AddTaskDto
     {
-        public required string UserName { get; set; }
+        /// <summary>
+        /// Using Username in DTO instead of Id for simpler API call demonstrations
+        /// </summary>
+        public required string Username { get; set; }
         public required string Name { get; set; }
         public required string Description { get; set; }
     }
