@@ -86,7 +86,7 @@ namespace Zimozi_dotnet_api_assignment.Models
                     Name = seedTaskData.name,
                     Description = seedTaskData.description,
                     AssignedUser = user,
-                    AssignedUserId = seedTaskData.assignedUserName,
+                    AssignedUserId = user.Id,
                 };
                 context.Set<UserTask>().Add(task);
             }
