@@ -8,6 +8,7 @@ using System.Text;
 using Zimozi_dotnet_api_assignment.data;
 using Zimozi_dotnet_api_assignment.Models.DTO;
 using Zimozi_dotnet_api_assignment.Models.Entities;
+using Zimozi_dotnet_api_assignment.Repositories;
 
 namespace Zimozi_dotnet_api_assignment.Controllers
 {
@@ -15,20 +16,20 @@ namespace Zimozi_dotnet_api_assignment.Controllers
     [Route("api/[controller]")]
     public class LoginController : Controller
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IUserRepository _users;
         private readonly IConfiguration _configuration;
 
-        public LoginController(ApplicationDbContext dbContext, IConfiguration configuration)
+        public LoginController(IUserRepository users, IConfiguration configuration)
         {
-            this._dbContext = dbContext;
             this._configuration = configuration;
+            _users = users;
         }
         // Post: /api/login
         [HttpPost]
         public ActionResult Login([FromBody]UserLoginDto userLogin)
         {
             // Find user based on Username
-            var user = _dbContext.Users.FirstOrDefault(u => u.Username == userLogin.Username);
+            var user = _users.GetByUsername(userLogin.Username);
             if (user == null)
             {
                 return Forbid();
