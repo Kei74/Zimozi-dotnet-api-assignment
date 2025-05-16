@@ -76,13 +76,13 @@ namespace Zimozi_dotnet_api_assignment
             });
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(builder.Configuration["ConnectionStrings:LocalDatabase"])
+                options.UseSqlServer(builder.Configuration["ConnectionStrings:SqlServerDatabase"])
                 .UseSeeding(SeedMethods.SeedMainSync));
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            // Enabling Swagger for demonstration purposes
+            // if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
