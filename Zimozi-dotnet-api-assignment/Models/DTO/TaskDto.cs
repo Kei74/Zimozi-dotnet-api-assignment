@@ -12,7 +12,7 @@ namespace Zimozi_dotnet_api_assignment.Models.DTO
         /// Using Username in DTO instead of Id for simpler API call demonstrations
         /// </summary>
         public required string AssignedUsername { get; set; }
-        public ICollection<TaskCommentDto>? Comments { get; set; }
+        public ICollection<TaskCommentDto> Comments { get; set; } = [];
 
         /*
         public TaskDto(UserTask task, bool includeComments = false)

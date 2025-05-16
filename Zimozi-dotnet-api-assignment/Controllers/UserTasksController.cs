@@ -26,7 +26,7 @@ namespace Zimozi_dotnet_api_assignment.Controllers
         public ActionResult GetAllTasks()
         {
             // Fetch all tasks from database
-            List<UserTask> allTasks = _dbContext.UserTasks.ToList();
+            List<UserTask> allTasks = _dbContext.UserTasks.Include(task => task.AssignedUser).ToList();
 
             // Map domain objects to DTO objects
             List<TaskDto> tasks = new List<TaskDto>();
@@ -52,7 +52,9 @@ namespace Zimozi_dotnet_api_assignment.Controllers
         public ActionResult GetTaskById([FromRoute] Guid id)
         {
             // Fetch task from database
-            UserTask? task = _dbContext.UserTasks.Find(id);
+            UserTask? task = _dbContext.UserTasks.Include(task => task.AssignedUser)
+                    .Include(task => task.TaskComments)
+                    .FirstOrDefault(task => task.Id == id);
 
             // Return error 404 if not found
             if (task == null)
