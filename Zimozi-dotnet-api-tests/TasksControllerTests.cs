@@ -8,6 +8,11 @@ using Zimozi_dotnet_api_assignment.Repositories;
 
 namespace Zimozi_dotnet_api_tests
 {
+    /// <summary>
+    /// Unit Tests for TasksController
+    /// </summary>
+    /// 
+    // To run tests, Build the solution from Visual Studio and open Test Explorer
     public class TasksControllerTests
     {
         private readonly UserTasksController _userTasksController;
