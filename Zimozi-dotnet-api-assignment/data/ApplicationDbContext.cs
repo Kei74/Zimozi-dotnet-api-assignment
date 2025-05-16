@@ -29,6 +29,7 @@ namespace Zimozi_dotnet_api_assignment.data
             modelBuilder.Entity<User>()
                 .HasMany<UserTask>(u => u.AssignedTasks)
                 .WithOne(t => t.AssignedUser)
+                .HasForeignKey(tc => tc.AssignedUserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             // Users and TaskComments, not navigable from Users, preserve comments and set null on delete

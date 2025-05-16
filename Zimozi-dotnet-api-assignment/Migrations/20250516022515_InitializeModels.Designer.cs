@@ -12,7 +12,7 @@ using Zimozi_dotnet_api_assignment.data;
 namespace Zimozi_dotnet_api_assignment.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250516020054_InitializeModels")]
+    [Migration("20250516022515_InitializeModels")]
     partial class InitializeModels
     {
         /// <inheritdoc />
@@ -84,10 +84,6 @@ namespace Zimozi_dotnet_api_assignment.Migrations
 
                     b.Property<Guid>("AssignedUserId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("AssignedUserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .IsRequired()

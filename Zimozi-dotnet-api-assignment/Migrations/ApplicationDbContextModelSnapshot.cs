@@ -82,10 +82,6 @@ namespace Zimozi_dotnet_api_assignment.Migrations
                     b.Property<Guid>("AssignedUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AssignedUserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
