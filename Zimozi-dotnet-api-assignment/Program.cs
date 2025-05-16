@@ -88,7 +88,7 @@ namespace Zimozi_dotnet_api_assignment
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseAuthentication();
             app.UseAuthorization();
