@@ -22,6 +22,14 @@ All /api/tasks methods require authentication
 Bearer token is obtained from the **/api/login** method
 To execute requests in SwaggerUI, the bearer token returned is to be pasted after clikcing the `Authorize` button at the top right of the webpage.
 
+### Available usernames:
+Admin
+Admin2
+Admin3
+User
+User2
+User3
+
 ### POST /api/login
 Verifies username against users in database, and on successful verification returns a bearer token for accessing the other endpoints.
 
