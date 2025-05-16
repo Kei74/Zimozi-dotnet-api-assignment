@@ -18,8 +18,9 @@
 
 
 ## Endpoints
-All /api/tasks methods require authentication
-Bearer token is obtained from the **/api/login** method
+All /api/tasks methods require authentication via username. <br>
+Password verification is not implemented for demo purposes
+Bearer token is obtained from the **/api/login** method <br>
 To execute requests in SwaggerUI, the bearer token returned is to be pasted after clikcing the `Authorize` button at the top right of the webpage.
 
 ### Available usernames:
