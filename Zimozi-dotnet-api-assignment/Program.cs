@@ -56,15 +56,17 @@ namespace Zimozi_dotnet_api_assignment
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options =>
             {
+                string jwtKey = Environment.GetEnvironmentVariable("Jwt_Key") ?? builder.Configuration["Jwt:key"];
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
+
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = builder.Configuration["Jwt:Issuer"],
                     ValidAudience = builder.Configuration["Jwt:Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:key"]))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
                 };
             });
 
@@ -74,10 +76,11 @@ namespace Zimozi_dotnet_api_assignment
                     p.RequireClaim(IdentityData.RoleClaimName, IdentityData.AdminRoleClaim)
                         .Build());
             });
+            string connectionString = Environment.GetEnvironmentVariable("ConnectionStrings_SqlServerDatabase") ?? builder.Configuration["ConnectionStrings:SqlServerDatabase"];
 
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(builder.Configuration["ConnectionStrings:SqlServerDatabase"])
-                .UseSeeding(SeedMethods.SeedMainSync));
+            builder.Services.AddDbContext<ApplicationDbContext>((options) =>
+                options.UseSqlServer(connectionString)
+                    .UseSeeding(SeedMethods.SeedMainSync));
 
             var app = builder.Build();
 

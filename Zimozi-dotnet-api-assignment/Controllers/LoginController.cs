@@ -38,7 +38,8 @@ namespace Zimozi_dotnet_api_assignment.Controllers
 
             var issuer = _configuration["Jwt:Issuer"];
             var audience = _configuration["Jwt:Audience"];
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            string jwtKey = Environment.GetEnvironmentVariable("Jwt_Key") ?? _configuration["Jwt:Key"];
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
             var tokenValidityMins = _configuration.GetValue<int>("Jwt:TokenValidityMins");
             var tokenExpiryTimeStamp = DateTime.UtcNow.AddMinutes(tokenValidityMins);
 
